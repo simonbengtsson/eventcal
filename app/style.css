@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 10px 20px;
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 28px;
+    margin-bottom: 0;
+    color: #333;
+}
+
+h1 img {
+    width: 50px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+.sub-header {
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 16px;
+    color: #999;
+    text-align: center;
+    font-style: italic;
+}
+
+.container {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.main-desc {
+    text-align: center;
+    margin: 10px 50px 40px 50px;
+}
+
+.help-block {
+    color: #888;
+    margin-top: 4px;
+    text-align: left;
+    font-size: 14px;
+}
+
+input, textarea {
+    border: 2px black solid;
+    border-radius: 2px;
+    font-size: 12px;
+    width: 100%;
+    margin-top: 7px;
+    font-style: italic;
+    padding: 5px 10px;
+    line-height: 30px;
+    outline: 0;
+}
+
+input:read-only {
+    background: #eee;
+    cursor: text;
+}
+
+label {
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #777;
+}
+
+.open-source-desc {
+    text-align: center;
+    margin: 30px;
+}
+
+.open-source-desc .github-badge {
+    display: block;
+    width: 60px;
+    height: 25px;
+    margin: 10px auto;
+}
+
+@media(max-width: 500px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .main-desc {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
