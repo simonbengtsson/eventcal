@@ -19,7 +19,7 @@ function filterEvent($content, $action)
 }
 
 if (isset($_GET["calendar"])) {
-    $fbCal = $_GET["calendar"];
+    $fbCal = urldecode($_GET["calendar"]);
     if (strpos($fbCal, 'webcal') === 0) {
         $fbCal = substr_replace($fbCal, "http", 0, strlen('webcal'));
     }
