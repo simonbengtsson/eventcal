@@ -11,6 +11,11 @@ To deploy this website, simply upload everything in the `app` folder to your ser
 
 `rsync -a app/ root@flown.io:~/sites/eventcal.flown.io`
 
+### Develop
+The easiest way to start development is by using php's built in web server. Run the following command from the app folder.
+
+`php -S localhost:8080 index.php`
+
 ### Facebook API
 It is possible to get event information from the Facebook Graph API and create an ical file from that. This would
 make it easier for the user to sign up for the service, but would require a re-login every 60 days as that is the
