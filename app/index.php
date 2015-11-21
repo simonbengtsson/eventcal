@@ -88,7 +88,7 @@ require_once('app.php');
 
         $form.find('input').on('input', function () {
             var cal = $("#fb-calendar").val().trim();
-            var domain = 'webcal://' + window.location.host + '?calendar=';
+            var domain = 'webcal://' + window.location.host + '/?calendar=';
             $filteredCal.val(domain + encodeURIComponent(cal));
         });
 
