@@ -45,7 +45,7 @@ require_once('app.php');
     <p class="sub-header">Subscribe to a subset of your Facebook events using ical</p>
 
     <p class="main-desc">
-        Facebook provides a way to export and sync all your events to a third party calendar application such as Google
+        Facebook provides <a href="https://www.facebook.com/help/152652248136178/">a way to export</a> and sync all your events to a third party calendar application such as Google
         Calendar. However you can't choose which events you want to sync and that's where this service steps in.<br><br>
         Right know it simply removes events you have not responded to yet as you probably won't attend them. If you want
         to filter events in some other
