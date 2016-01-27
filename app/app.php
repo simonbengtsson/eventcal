@@ -23,9 +23,9 @@ if (isset($_GET["calendar"])) {
     if (strpos($fbCal, 'webcal') === 0) {
         $fbCal = substr_replace($fbCal, "http", 0, strlen('webcal'));
     }
-    if (strpos($fbCal, 'http://' !== 0)) {
+    if (!preg_match('#^https?://www\.facebook\.com/ical/#', $fbCal)) {
         http_response_code(400);
-        die("Not a url");
+        die("Not a valid Facebook calendar url");
     }
     $content = @file_get_contents($fbCal);
 
