@@ -25,7 +25,7 @@ if (isset($_GET["calendar"])) {
     }
     if (strpos($fbCal, 'http://www.facebook.com/ical/' !== 0)) {
         http_response_code(400);
-        die("Not a valid Facebook calendar url")
+        die("Not a valid Facebook calendar url");
     }
     $content = @file_get_contents($fbCal);
 
