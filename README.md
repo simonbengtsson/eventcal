@@ -14,7 +14,7 @@ To deploy this website, simply upload everything in the `app` folder to your ser
 ### Develop
 The easiest way to start development is by using php's built in web server. Run the following command from the app folder.
 
-`php -S localhost:8080 index.php`
+`php -S localhost:8080 -t app`
 
 ### Facebook API
 It is possible to get event information from the Facebook Graph API and create an ical file from that. This would
