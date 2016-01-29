@@ -1,10 +1,16 @@
 <?php
 
-const STATUS_MAYBE = 'TENTATIVE';
+const STATUS_MAYBE = 'TENTATIVE'; // This is also the status for "interested"
 const STATUS_GOING = 'ACCEPTED';
 const STATUS_UNDECIDED = 'NEEDS-ACTION';
 
-function filterEvent($content, $action)
+/**
+ * Remove events from $content with the status $action and returns the result
+ * @param $content string
+ * @param $action string STATUS_MAYBE, STATUS_GOING or STATUS_UNDECIDED
+ * @return string Modified content
+ */
+function removeEvents($content, $action)
 {
     $last = 0;
     while (strpos($content, "PARTSTAT:$action", $last + 1) !== false) {
@@ -16,6 +22,24 @@ function filterEvent($content, $action)
     }
 
     return $content;
+}
+
+/**
+ * Get statuses
+ * @return array The statuses that should be removed
+ */
+function status() {
+    $types = [STATUS_MAYBE, STATUS_GOING, STATUS_UNDECIDED];
+    $status = array_get($_GET, "status");
+    $status = $status ? $status : STATUS_GOING . ',' . STATUS_MAYBE;
+    $status = explode(',', strtoupper($status));
+    foreach($status as $s) {
+        if (!in_array($s, $types)) {
+            http_response_code(400);
+            die('Not supported status: ' . $s);
+        }
+    }
+    return array_diff($types, $status);
 }
 
 if (isset($_GET["calendar"])) {
@@ -31,10 +55,17 @@ if (isset($_GET["calendar"])) {
 
     if ($content === false) {
         http_response_code(400);
-        die("Couldn't fetch calendar");
+        die("Could not fetch calendar");
     }
 
-    $content = filterEvent($content, STATUS_UNDECIDED);
+    if (strpos($content, 'BEGIN:VCALENDAR') !== 0) {
+        http_response_code(400);
+        die("Calendar url not valid (facebook returned error)");
+    }
+
+    foreach(status() as $status) {
+        $content = removeEvents($content, $status);
+    }
 
     header('Content-Type: text/calendar; charset=utf-8');
     header('Content-Disposition: attachment;filename=calendar.ics');

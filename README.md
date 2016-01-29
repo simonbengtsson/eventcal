@@ -9,7 +9,7 @@ removes events you have not responded to yet. If you want to filter events in so
 ### Deploy
 To deploy this website, simply upload everything in the `app` folder to your server. This can for example be done with rsync.
 
-`rsync -a app/ root@flown.io:~/sites/eventcal.flown.io`
+`rsync -a --chown=www-data:www-data app/ root@flown.io:/var/www/eventcal.flown.io`
 
 ### Develop
 The easiest way to start development is by using php's built in web server.
