@@ -51,7 +51,11 @@ if (isset($_GET["calendar"])) {
         http_response_code(400);
         die("Not a valid Facebook calendar url");
     }
-    $content = @file_get_contents($fbCal);
+
+    // Facebook blocks requests without user agent
+    $content = @file_get_contents($fbCal, false, stream_context_create(['http' => [
+        'header'=>"User-Agent: eventcal.flown.io\r\n"
+    ]]));
 
     if ($content === false) {
         http_response_code(400);
