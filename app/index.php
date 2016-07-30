@@ -124,9 +124,8 @@ require_once('app.php');
         function update() {
             var cal = $("#fb-calendar").val().trim();
             if (cal) {
-                var base = 'webcal://' + window.location.host + '/?calendar=';
-                var url = base + encodeURIComponent(cal);
-
+                var base = 'webcal://' + window.location.host + '?base64=true&calendar=';
+                var url = base + window.btoa(cal);
 
                 var $checked = $('.options .switcher input:checked');
                 var status = $checked.map(function() {

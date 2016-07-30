@@ -38,10 +38,16 @@ function status() {
 }
 
 if (isset($_GET["calendar"])) {
-    $fbCal = urldecode($_GET["calendar"]);
-    if (strpos($fbCal, 'webcal') === 0) {
-        $fbCal = substr_replace($fbCal, "http", 0, strlen('webcal'));
+    if (isset($_GET["base64"])) {
+        $fbCal = base64_decode($_GET["calendar"]);
+    } else {
+        $fbCal = urldecode($_GET["calendar"]);
     }
+
+    if (strpos($fbCal, 'webcal') === 0) {
+        $fbCal = substr_replace($fbCal, "https", 0, strlen('webcal'));
+    }
+
     if (!preg_match('#^https?://www\.facebook\.com/ical/#', $fbCal)) {
         http_response_code(400);
         die("Not a valid Facebook calendar url");
@@ -59,7 +65,7 @@ if (isset($_GET["calendar"])) {
 
     if (strpos($content, 'BEGIN:VCALENDAR') !== 0) {
         http_response_code(400);
-        die("Calendar url not valid (facebook returned error)");
+        die("Calendar not valid. Facebook error: " . $content);
     }
 
     foreach(status() as $status) {
@@ -68,7 +74,5 @@ if (isset($_GET["calendar"])) {
 
     header('Content-Type: text/calendar;charset=utf-8');
     header('Content-Disposition: attachment;filename=calendar.ics');
-    header_remove("X-Powered-By");
-    header_remove("Server");
     die($content);
 }
