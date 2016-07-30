@@ -102,3 +102,137 @@ a:hover {
         margin-left: 0;
     }
 }
+
+.options {
+    width: 250px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+body .switcher {
+    font-size: 16px;
+    color: #444;
+    font-weight:normal;
+}
+
+
+
+/** -- SWITCHER http://codepen.io/someatoms/pen/JKBrjo -- **/
+
+.switcher {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 50px;
+    height: 20px;
+    line-height: 20px;
+    margin: 5px 10px;
+    font-size: 24px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.switcher input {
+    display: none;
+}
+
+.switcher__indicator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #d5d5d5;
+    border-radius: 50%;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    -webkit-animation-name: pulsein;
+    animation-name: pulsein;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+}
+.switcher__indicator::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 40px;
+    height: 4px;
+    background-color: #d5d5d5;
+    border-radius: 5px;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+}
+input:checked + .switcher__indicator::after {
+    background-color: #29ce9a;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+    -webkit-animation-name: pulseout;
+    animation-name: pulseout;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+}
+input:checked + .switcher__indicator::before {
+    background-color: #29ce9a;
+}
+input:disabled + .switcher__indicator::after, input:disabled + .switcher__indicator::before {
+    background-color: #e5e5e5;
+}
+
+@-webkit-keyframes pulsein {
+    0%,
+    100% {
+        top: 0;
+        height: 20px;
+        width: 20px;
+    }
+    50% {
+        top: 2px;
+        height: 14px;
+        width: 26px;
+    }
+}
+
+@keyframes pulsein {
+    0%,
+    100% {
+        top: 0;
+        height: 20px;
+        width: 20px;
+    }
+    50% {
+        top: 2px;
+        height: 14px;
+        width: 26px;
+    }
+}
+@-webkit-keyframes pulseout {
+    0%,
+    100% {
+        top: 0;
+        height: 20px;
+        width: 20px;
+    }
+    50% {
+        top: 2px;
+        height: 14px;
+        width: 26px;
+    }
+}
+@keyframes pulseout {
+    0%,
+    100% {
+        top: 0;
+        height: 20px;
+        width: 20px;
+    }
+    50% {
+        top: 2px;
+        height: 14px;
+        width: 26px;
+    }
+}
+
+/** -- END SWITCHER -- **/

@@ -15,6 +15,10 @@ function array_get($arr, $key, $default = null)
     return isset($arr[$key]) ? $arr[$key] : $default;
 }
 
+const STATUS_MAYBE = 'TENTATIVE'; // This is also the status for "interested"
+const STATUS_GOING = 'ACCEPTED';
+const STATUS_UNDECIDED = 'NEEDS-ACTION';
+
 // Routing for php's built in web server
 $ext = array_get(pathinfo($_SERVER['REQUEST_URI']), 'extension');
 if (in_array($ext, ['png', 'jpg', 'jpeg', 'css', 'js', 'gif', 'html'])) {
@@ -37,7 +41,7 @@ require_once('app.php');
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-          content="Subscribe to a subset of your Facebook events using ical. Filters out events you are not attending to or has not responded to.">
+          content="Add Facebook events using ical. Filters out events you are not attending to or has not responded to.">
 </head>
 <body>
 
@@ -48,13 +52,31 @@ require_once('app.php');
     <p class="sub-header">Subscribe to a subset of your Facebook events using ical</p>
 
     <p class="main-desc">
-        Facebook provides <a href="https://www.facebook.com/help/152652248136178/">a way to export</a> and sync all your events to a third party calendar application such as Google
-        Calendar. However you can't choose which events you want to sync and that's where this service steps in.<br><br>
-        Right know it simply removes events you have not responded to yet as you probably won't attend them. If you want
-        to filter events in some other
-        way, let me know on <a href="https://google.com/+simonbengtsson">Google+</a> or
+        Facebook provides <a href="https://www.facebook.com/help/152652248136178/">a way to export</a> and sync all your
+        events to a third party calendar application such as Google Calendar. However they include events you have not yet
+        responded to which can fill up your calendar pretty quickly if you get invited to a lot of events. <br><br>
+
+        This service acts a filter between facebook and your calendar and you can choose to filter out events you don't want.
+        If you want to filter events in some other
+        way or have some other feature request etc, let me know on <a href="https://google.com/+simonbengtsson">Google+</a> or
         <a href="https://twitter.com/someatoms">Twitter</a>.
     </p>
+
+    <div class="options">
+        <label style="display: block; margin-bottom: 10px;">Include the following events</label>
+        <label class="switcher">
+            <input type="checkbox" checked="checked" value="<?php echo STATUS_GOING ?>"/>
+            <span class="switcher__indicator"></span> Going
+        </label><br/>
+        <label class="switcher">
+            <input type="checkbox"  checked="checked"  value="<?php echo STATUS_MAYBE ?>"/>
+            <span class="switcher__indicator"></span> Maybe and Intrested
+        </label><br/>
+        <label class="switcher">
+            <input type="checkbox"  value="<?php echo STATUS_UNDECIDED ?>"/>
+            <span class="switcher__indicator"></span> Not responded to
+        </label><br/>
+    </div>
 
     <form id="calendar-form">
         <label for="fb-calendar">Facebook calendar</label><br>
@@ -83,17 +105,40 @@ require_once('app.php');
 
 </div>
 
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script>
     +function () {
         var $form = $("#calendar-form");
         var $filteredCal = $('#filtered-calendar');
+        var $switches = $('.options .switcher input');
+
+        $switches.change(function() {
+            update();
+        });
 
         $form.find('input').on('input', function () {
-            var cal = $("#fb-calendar").val().trim();
-            var domain = 'webcal://' + window.location.host + '/?calendar=';
-            $filteredCal.val(domain + encodeURIComponent(cal));
+            update();
+
         });
+
+        function update() {
+            var cal = $("#fb-calendar").val().trim();
+            if (cal) {
+                var base = 'webcal://' + window.location.host + '/?calendar=';
+                var url = base + encodeURIComponent(cal);
+
+
+                var $checked = $('.options .switcher input:checked');
+                var status = $checked.map(function() {
+                    return this.value;
+                }).toArray();
+                url += '&status=' + status.join(',');
+
+                $filteredCal.val(url);
+            } else {
+                $filteredCal.val("");
+            }
+        }
 
         $filteredCal.click(function () {
             $(this).select();

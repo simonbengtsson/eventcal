@@ -1,9 +1,5 @@
 <?php
 
-const STATUS_MAYBE = 'TENTATIVE'; // This is also the status for "interested"
-const STATUS_GOING = 'ACCEPTED';
-const STATUS_UNDECIDED = 'NEEDS-ACTION';
-
 /**
  * Remove events from $content with the status $action and returns the result
  * @param $content string
@@ -30,9 +26,8 @@ function removeEvents($content, $action)
  */
 function status() {
     $types = [STATUS_MAYBE, STATUS_GOING, STATUS_UNDECIDED];
-    $status = array_get($_GET, "status");
-    $status = $status ? $status : STATUS_GOING . ',' . STATUS_MAYBE;
-    $status = explode(',', strtoupper($status));
+    $status = array_get($_GET, "status", STATUS_GOING . ',' . STATUS_MAYBE);
+    $status = $status ? explode(',', strtoupper($status)) : [];
     foreach($status as $s) {
         if (!in_array($s, $types)) {
             http_response_code(400);
