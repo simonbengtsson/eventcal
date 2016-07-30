@@ -21,6 +21,7 @@ if (in_array($ext, ['png', 'jpg', 'jpeg', 'css', 'js', 'gif', 'html'])) {
     return false;
 }
 
+require_once('logger.php');
 require_once('app.php');
 
 ?>
