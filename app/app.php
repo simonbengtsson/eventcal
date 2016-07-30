@@ -71,7 +71,9 @@ if (isset($_GET["calendar"])) {
         $content = removeEvents($content, $status);
     }
 
-    header('Content-Type: text/calendar; charset=utf-8');
+    header('Content-Type: text/calendar;charset=utf-8');
     header('Content-Disposition: attachment;filename=calendar.ics');
+    header_remove("X-Powered-By");
+    header_remove("Server");
     die($content);
 }
