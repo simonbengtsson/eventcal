@@ -2,7 +2,7 @@
 Subscribe to a subset of your Facebook events using ical
 
 Facebook provides a way to export and sync all your events to a third party calendar application such as Google Calendar.
-However you can't choose which events you want to sync and that's where this service steps in. Right know it simply
+However you can't choose which events you want to sync and that's where this service steps in. Right now it simply
 removes events you have not responded to yet. If you want to filter events in some other way, let me know on
 [Google+](https://google.com/+simonbengtsson) or [twitter](https://twitter.com/someatoms).
 
