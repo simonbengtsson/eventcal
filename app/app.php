@@ -20,6 +20,29 @@ function removeEvents($content, $action)
     return $content;
 }
 
+// Escape organizer field and remove quotes to fix for example
+// Google Calendar import
+function fixFields($content) {
+    $startNeedle = 'ORGANIZER;CN=';
+    $endNeedle = ':MAILTO:';
+
+    $offset = 0;
+    while (($pos = strpos($content, $startNeedle, $offset)) !== false) {
+        $offset = $pos + 1;
+        $start = $pos + strlen($startNeedle);
+        $end = strpos($content, $endNeedle, $pos);
+        $length = $end - $start;
+
+        $organizer = substr($content, $start, $length);
+        $organizer = str_replace('"', "", $organizer);
+        $organizer = '"' . $organizer . '"';
+
+        $content = substr_replace($content, $organizer, $start, $length);
+    }
+
+    return $content;
+}
+
 /**
  * Get statuses
  * @return array The statuses that should be removed
@@ -37,6 +60,13 @@ function status() {
     return array_diff($types, $status);
 }
 
+function validateUrl($url) {
+    if (!preg_match('#^https?://www\.facebook\.com/ical/#', $url)) {
+        http_response_code(400);
+        die("Not a valid Facebook calendar url");
+    }
+}
+
 if (isset($_GET["calendar"])) {
     if (isset($_GET["base64"])) {
         $fbCal = base64_decode($_GET["calendar"]);
@@ -48,10 +78,7 @@ if (isset($_GET["calendar"])) {
         $fbCal = substr_replace($fbCal, "https", 0, strlen('webcal'));
     }
 
-    if (!preg_match('#^https?://www\.facebook\.com/ical/#', $fbCal)) {
-        http_response_code(400);
-        die("Not a valid Facebook calendar url");
-    }
+    validateUrl($fbCal);
 
     // Facebook blocks requests without user agent
     $content = @file_get_contents($fbCal, false, stream_context_create(['http' => [
@@ -71,6 +98,7 @@ if (isset($_GET["calendar"])) {
     foreach(status() as $status) {
         $content = removeEvents($content, $status);
     }
+    $content = fixFields($content);
 
     header('Content-Type: text/calendar;charset=utf-8');
     header('Content-Disposition: attachment;filename=calendar.ics');
