@@ -67,11 +67,22 @@ function validateUrl($url) {
     }
 }
 
-if (isset($_GET["calendar"])) {
+// Sometimes chrome omits the ampersand in the query string (see issue #9)
+function addAmpersandIfMissing($url) {
+    $pos = strpos($url, 'key=');
+    if ($pos !== false && $url[$pos - 1] !== '&') {
+        return substr_replace($url, '&key=', $pos, strlen('key='));
+    }
+    return $url;
+}
+
+$calendar = array_get($_GET, "calendar");
+
+if ($calendar) {
     if (isset($_GET["base64"])) {
-        $fbCal = base64_decode($_GET["calendar"]);
+        $fbCal = base64_decode($calendar);
     } else {
-        $fbCal = urldecode($_GET["calendar"]);
+        $fbCal = urldecode($calendar);
     }
 
     if (strpos($fbCal, 'webcal') === 0) {
@@ -79,6 +90,7 @@ if (isset($_GET["calendar"])) {
     }
 
     validateUrl($fbCal);
+    $fbCal = addAmpersandIfMissing($fbCal);
 
     // Facebook blocks requests without user agent
     $content = @file_get_contents($fbCal, false, stream_context_create(['http' => [
