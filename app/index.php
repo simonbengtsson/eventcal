@@ -59,7 +59,7 @@ require_once('app.php');
         This service acts a filter between facebook and your calendar and you can choose to filter out events you don't want.
         If you want to filter events in some other
         way or have some other feature request etc, let me know on <a href="https://google.com/+simonbengtsson">Google+</a> or
-        <a href="https://twitter.com/someatoms">Twitter</a>.
+        <a href="https://twitter.com/simongbengtsson">Twitter</a>.
     </p>
 
     <div class="options">
