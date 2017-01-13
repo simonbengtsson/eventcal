@@ -96,9 +96,9 @@ require_once('app.php');
 
     <p class="open-source-desc">
         If you have a feature request or have found a bug you can post an issue on
-        <a href="http://github.com/someatoms/eventcal">github</a>.
+        <a href="http://github.com/simonbengtsson/eventcal">github</a>.
         <iframe class="github-badge"
-                src="https://ghbtns.com/github-btn.html?user=someatoms&repo=eventcal&type=star&count=false"
+                src="https://ghbtns.com/github-btn.html?user=simonbengtsson&repo=eventcal&type=star&count=false"
                 frameborder="0"
                 scrolling="0"></iframe>
     </p>
