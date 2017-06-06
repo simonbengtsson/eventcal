@@ -40,6 +40,9 @@ function fixFields($content) {
         $content = substr_replace($content, $organizer, $start, $length);
     }
 
+    $pattern = '/X-WR-CALNAME:.*/';
+    $content = preg_replace($pattern, "X-WR-CALNAME:Facebook Events", $content,1);
+
     return $content;
 }
 
