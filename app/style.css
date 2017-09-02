@@ -27,6 +27,28 @@ h3 {
     margin-top: 2em;
 }
 
+button {
+    color: #444;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #555;
+    line-height: 30px;
+    border-radius: 40px;
+    padding: 10px 20px;
+}
+
+button img {
+    height: 30px;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #ddd;
+}
+
 .sub-header {
     margin-top: 0;
     font-weight: bold;

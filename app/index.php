@@ -58,6 +58,7 @@ require_once('app.php');
     </p>
 
     <h3><span class="progress-step first">1</span> Get the URL for all of your upcoming facebook events</h3>
+
     Follow <a href="https://www.facebook.com/help/152652248136178">these</a> instructions. The URL should
     look similar to this: <em>webcal://www.facebook.com/ical/u.php?uid=1645531053&key=AQDdB7kP2hjd14uh</em>
         <input id="fb-calendar" placeholder="Paste the Facebook calendar URL here">
@@ -79,7 +80,9 @@ require_once('app.php');
     </div>
 
     <h3><span class="progress-step third">3</span> Subscribe to the filtered calendar</h3>
-    Subscribe to the calendar below in your favorite calendar client or <a id="gcal" href="#">add it to Google Calendar</a>.
+    <button id="nativecal"><img src="appicon.png">Default Calendar</button>
+    <button id="gcal"><img src="gcal.png">Google Calendar</button>
+    <p>Or you can manually subscribe to the calendar with the following URL:</p>
     <input id="filtered-calendar" readonly placeholder="Filtered calendar will appear here">
 
     <p class="help-block"></p>
@@ -100,20 +103,49 @@ require_once('app.php');
     +function () {
         var $fbCal = $("#fb-calendar");
         var $gcal = $("#gcal");
+        var $nativecal = $("#nativecal");
         var $filteredCal = $('#filtered-calendar');
         var $switches = $('.options .switcher input');
 
-        $switches.change(function() {
-            update();
+        $gcal.click(function() {
+            if (!validateURL()) return;
+            var url = getFilteredCalendar();
+            var gurl = "https://www.google.com/calendar/render?cid=" + encodeURIComponent(url);
+            window.open(gurl);
         });
 
-        $fbCal.on('input', function () {
-            update();
-
+        $nativecal.click(function() {
+            if (!validateURL()) return;
+            var url = getFilteredCalendar();
+            window.open(url);
         });
+
+        $switches.change(update);
+        $fbCal.on('input', update);
 
         function update() {
-            var cal = $("#fb-calendar").val().trim();
+            $fbCal.css('border-color', '#000');
+            var url = getFbCalendar();
+            if (url && !validateURL()) {
+                $fbCal.css('border-color', '#e74c3c');
+            } else if (url) {
+                var filtered = getFilteredCalendar();
+                $filteredCal.val(filtered);
+            }
+        }
+
+        function validateURL() {
+            var url = getFbCalendar();
+            var urlregex = /^(https?|webcal):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
+            return urlregex.test(url);
+        }
+
+        function getFbCalendar() {
+            return $("#fb-calendar").val().trim();
+        }
+
+        function getFilteredCalendar() {
+            var cal = getFbCalendar();
             if (cal) {
                 var base = 'webcal://' + window.location.host + '?base64=true&calendar=';
                 var url = base + window.btoa(cal);
@@ -123,13 +155,9 @@ require_once('app.php');
                     return this.value;
                 }).toArray();
                 url += '&status=' + status.join(',');
-
-                $filteredCal.val(url);
-                var gcalUrl = "https://www.google.com/calendar/render?cid=" + encodeURIComponent(url);
-                $gcal.attr("href", gcalUrl);
+                return url;
             } else {
-                $filteredCal.val("");
-                $gcal.attr("href", "");
+                return "";
             }
         }
 
