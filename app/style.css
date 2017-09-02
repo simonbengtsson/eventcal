@@ -22,6 +22,11 @@ h1 img {
     vertical-align: middle;
 }
 
+h3 {
+    margin-bottom: 0.7em;
+    margin-top: 2em;
+}
+
 .sub-header {
     margin-top: 0;
     font-weight: bold;
@@ -105,7 +110,6 @@ a:hover {
 
 .options {
     width: 250px;
-    margin: 0 auto;
     margin-bottom: 40px;
 }
 
@@ -115,6 +119,24 @@ body .switcher {
     font-weight:normal;
 }
 
+.progress-step {
+    margin-top: -5px;
+    margin-right: 5px;width: 30px;
+    height: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    background: #444 !important;
+    border-radius: 100px;
+    color: #fff;
+}
+
+.progress-step.first { background: #9b59b6; }
+.progress-step.second { background: #29ce9a; }
+.progress-step.third { background: #e67e22; }
 
 
 /** -- SWITCHER http://codepen.io/someatoms/pen/JKBrjo -- **/

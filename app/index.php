@@ -49,21 +49,21 @@ require_once('app.php');
 
     <h1><img src="appicon.png">Facebook Event Calendar</h1>
 
-    <p class="sub-header">Subscribe to a subset of your Facebook events using ical</p>
+    <p class="sub-header">Filter Facebook events before exporting them to your calendar (ical format)</p>
 
     <p class="main-desc">
         Facebook provides <a href="https://www.facebook.com/help/152652248136178/">a way to export</a> and sync all your
-        events to a third party calendar application such as Google Calendar. However they include events you have not yet
-        responded to which can fill up your calendar pretty quickly if you get invited to a lot of events. <br><br>
-
-        This service acts a filter between facebook and your calendar and you can choose to filter out events you don't want.
-        If you want to filter events in some other
-        way or have some other feature request etc, let me know on <a href="https://google.com/+simonbengtsson">Google+</a> or
-        <a href="https://twitter.com/simongbengtsson">Twitter</a>.
+        events to a third party calendar application such as Google Calendar, Apple Calendar or Outlook. However they
+        include events not yet responded to. This service can declutter your calendar by filtering out those events.
     </p>
 
+    <h3><span class="progress-step first">1</span> Get the URL for all of your upcoming facebook events</h3>
+    Follow <a href="https://www.facebook.com/help/152652248136178">these</a> instructions. The URL should
+    look similar to this: <em>webcal://www.facebook.com/ical/u.php?uid=1645531053&key=AQDdB7kP2hjd14uh</em>
+        <input id="fb-calendar" placeholder="Paste the Facebook calendar URL here">
+
+    <h3><span class="progress-step second">2</span> Choose the events you want</h3>
     <div class="options">
-        <label style="display: block; margin-bottom: 10px;">Include the following events</label>
         <label class="switcher">
             <input type="checkbox" checked="checked" value="<?php echo STATUS_GOING ?>"/>
             <span class="switcher__indicator"></span> Going
@@ -78,25 +78,15 @@ require_once('app.php');
         </label><br/>
     </div>
 
-    <form id="calendar-form">
-        <label for="fb-calendar">Facebook calendar</label><br>
-        <input id="fb-calendar">
+    <h3><span class="progress-step third">3</span> Subscribe to the filtered calendar</h3>
+    Subscribe to the calendar below in your favorite calendar client or <a id="gcal" href="#">add it to Google Calendar</a>.
+    <input id="filtered-calendar" readonly placeholder="Filtered calendar will appear here">
 
-        <p class="help-block">
-            To get your facebook calendar link follow <a href="https://www.facebook.com/help/152652248136178">these</a>
-            instructions. Your calendar link should look something like this
-            <em>webcal://www.facebook.com/ical/u.php?uid=1645531053&key=AQDdB7kP2hjd14uh</em>
-        </p>
-    </form>
-
-    <label for="filtered-calendar">Filtered calendar</label><br>
-    <input id="filtered-calendar" readonly>
-
-    <p class="help-block">Subscribe to this calendar in Google Calendar or a similar application</p>
+    <p class="help-block"></p>
 
     <p class="open-source-desc">
-        If you have a feature request or have found a bug you can post an issue on
-        <a href="http://github.com/simonbengtsson/eventcal">github</a>.
+        If you have any questions, let me know on <a href="https://twitter.com/simongbengtsson">Twitter</a> or
+        <a href="http://github.com/simonbengtsson/eventcal">Github</a>
         <iframe class="github-badge"
                 src="https://ghbtns.com/github-btn.html?user=simonbengtsson&repo=eventcal&type=star&count=false"
                 frameborder="0"
@@ -108,7 +98,8 @@ require_once('app.php');
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script>
     +function () {
-        var $form = $("#calendar-form");
+        var $fbCal = $("#fb-calendar");
+        var $gcal = $("#gcal");
         var $filteredCal = $('#filtered-calendar');
         var $switches = $('.options .switcher input');
 
@@ -116,7 +107,7 @@ require_once('app.php');
             update();
         });
 
-        $form.find('input').on('input', function () {
+        $fbCal.on('input', function () {
             update();
 
         });
@@ -134,8 +125,11 @@ require_once('app.php');
                 url += '&status=' + status.join(',');
 
                 $filteredCal.val(url);
+                var gcalUrl = "https://www.google.com/calendar/render?cid=" + encodeURIComponent(url);
+                $gcal.attr("href", gcalUrl);
             } else {
                 $filteredCal.val("");
+                $gcal.attr("href", "");
             }
         }
 
