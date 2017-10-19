@@ -110,13 +110,13 @@ require_once('app.php');
             if (!validateURL()) return;
             var url = getFilteredCalendar();
             var gurl = "https://www.google.com/calendar/render?cid=" + encodeURIComponent(url);
-            window.open(gurl);
+            window.open(gurl, '_self');
         });
 
         $nativecal.click(function() {
             if (!validateURL()) return;
             var url = getFilteredCalendar();
-            window.open(url);
+            window.open(url, '_self');
         });
 
         $switches.change(update);
