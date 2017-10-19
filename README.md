@@ -3,9 +3,11 @@
 </a> 
 
 # Facebook Event Filter
-Filters and sanitizes your Facebook events into ical format. 
+Filters and sanitizes your Facebook events into ical [http://eventcal.flown.io](http://eventcal.flown.io)
 
 Facebook provides a way to export and sync all your events to a third party calendar application such as Google Calendar, Apple Calendar or Outlook. However they include events not yet responded to. This service can declutter your calendar by filtering out those events.
+
+
 
 ### Deploy
 To deploy this service to your own server, simply upload everything in the `app` folder. With `rsync` this would like something like this:
