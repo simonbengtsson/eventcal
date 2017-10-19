@@ -70,7 +70,7 @@ require_once('app.php');
         </label><br/>
         <label class="switcher">
             <input type="checkbox"  checked="checked"  value="<?php echo STATUS_MAYBE ?>"/>
-            <span class="switcher__indicator"></span> Maybe and Intrested
+            <span class="switcher__indicator"></span> Maybe and Interested
         </label><br/>
         <label class="switcher">
             <input type="checkbox"  value="<?php echo STATUS_UNDECIDED ?>"/>
