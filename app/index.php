@@ -146,7 +146,7 @@ require_once('app.php');
         function getFilteredCalendar() {
             var cal = getFbCalendar();
             if (cal) {
-                var base = 'webcal://' + window.location.host + '?base64=true&calendar=';
+                var base = 'webcal://' + window.location.host + window.location.pathname + '?base64=true&calendar=';
                 var url = base + window.btoa(cal);
 
                 var $checked = $('.options .switcher input:checked');
