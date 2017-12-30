@@ -89,10 +89,9 @@ require_once('app.php');
     <p class="open-source-desc">
         If you have any questions, let me know on <a href="https://twitter.com/simongbengtsson">Twitter</a> or
         <a href="http://github.com/simonbengtsson/eventcal">Github</a>
-        <iframe class="github-badge"
-                src="https://ghbtns.com/github-btn.html?user=simonbengtsson&repo=eventcal&type=star&count=false"
-                frameborder="0"
-                scrolling="0"></iframe>
+        <br>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=simonbengtsson&repo=eventcal&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
     </p>
 
 </div>
