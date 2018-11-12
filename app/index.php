@@ -35,7 +35,7 @@ require_once('app.php');
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="http://eventcal.flown.io/appicon.png" rel="icon" sizes="192x192"/>
+    <link href="https://eventcal.flown.io/appicon.png" rel="icon" sizes="192x192"/>
     <link href="style.css" rel="stylesheet" type="text/css">
     <title>Facebook Event Calendar</title>
 
