@@ -64,7 +64,7 @@ function status() {
 }
 
 function validateUrl($url) {
-    if (!preg_match('#^https?://www\.facebook\.com/ical/#', $url)) {
+    if (!preg_match('#^https?://www\.facebook\.com#', $url)) {
         http_response_code(400);
         die("Not a valid Facebook calendar url");
     }
