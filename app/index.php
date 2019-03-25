@@ -59,7 +59,7 @@ require_once('app.php');
 
     <h3><span class="progress-step first">1</span> Get the URL of your upcoming Facebook events</h3>
     Follow the <a href="https://www.facebook.com/help/152652248136178">How do I export my Facebook events?</a> guide and then paste the URL below.
-    The URL should look similar to this: <em>webcal://www.facebook.com/ical/u.php?uid=1645531053&key=AQDdB7kP2hjd14uh</em>
+    The URL should look similar to this: <em>https://www.facebook.com/events/ical/upcoming/?uid=6246345&key=6SAh6345G5</em>
     <input id="fb-calendar" placeholder="Paste the Facebook calendar URL here">
 
     <h3><span class="progress-step second">2</span> Choose the events you want</h3>
