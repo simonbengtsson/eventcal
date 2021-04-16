@@ -58,9 +58,14 @@ require_once('app.php');
     </p>
 
     <h3><span class="progress-step first">1</span> Get the URL of your upcoming Facebook events</h3>
-    Follow the <a href="https://www.facebook.com/help/152652248136178">How do I export my Facebook events?</a> guide and then paste the URL below.
-    The URL should look similar to this: <em>https://www.facebook.com/events/ical/upcoming/?uid=6246345&key=6SAh6345G5</em>
+    Currently (May 2021) it can be done this way, but facebook might do minor redesigns in the future. Facebook provides a <a href="https://www.facebook.com/help/152652248136178">guide</a> for exporting one event to a calendar which might be a good start if you are having issues with the below steps.
+    <ol>
+        <li>On the desktop go to your <a href="https://www.facebook.com/events/calendar">facebook event list</a>.</li>
+        <li>Right click the "Add to Calendar" button</li>
+        <li>Click "Copy Link Address" and paste it below</li>
+    </ol>
     <input id="fb-calendar" placeholder="Paste the Facebook calendar URL here">
+    <p>The URL should look similar to this: <em>https://www.facebook.com/events/ical/upcoming/?uid=6246345&key=6SAh6345G5</em></p>
 
     <h3><span class="progress-step second">2</span> Choose the events you want</h3>
     <div class="options">
@@ -79,6 +84,7 @@ require_once('app.php');
     </div>
 
     <h3><span class="progress-step third">3</span> Subscribe to the filtered calendar</h3>
+    <p>Note that it might take up to <a href="https://support.google.com/calendar/answer/37100?hl=en&ref_topic=1672445">12 hours</a> for changes to show in your Google Calendar or other calendar clients</p>
     <button id="nativecal"><img src="appicon.png">System Calendar</button>
     <button id="gcal"><img src="gcal.png">Google Calendar</button>
     <p>Or you can manually subscribe to the calendar with the following URL:</p>
