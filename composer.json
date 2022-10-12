@@ -5,10 +5,10 @@
         "process-timeout": 0
     },
     "scripts": {
-        "logs": "scp -P 3333 simonb@flown.io:/var/www/eventcal.stats.json stats.json && scp -P 3333 simonb@flown.io:/var/www/eventcal.debug.json debug.json && scp -P 3333 simonb@flown.io:/var/www/eventcal.errors.log errors.log",
+        "logs": "scp root@flown.io:/var/www/eventcal.stats.json stats.json && scp root@flown.io:/var/www/eventcal.debug.json debug.json && scp root@flown.io:/var/www/eventcal.errors.log errors.log",
         "start": "php -S localhost:8080 -t app",
-        "deploy": "rsync -a -e 'ssh -p 3333' app/ simonb@flown.io:/var/www/eventcal.flown.io",
-        "deploytest": "rsync -a -e 'ssh -p 3333' --chown=www-data:www-data app/ root@flown.io:/var/www/testing.flown.io"
+        "deploy": "rsync -a app/ root@flown.io:/var/www/eventcal.flown.io",
+        "deploytest": "rsync -a --chown=www-data:www-data app/ root@flown.io:/var/www/testing.flown.io"
     },
     "require": {}
 }
