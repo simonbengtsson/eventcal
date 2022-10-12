@@ -135,6 +135,15 @@ require_once('app.php');
             } else if (url) {
                 var filtered = getFilteredCalendar();
                 $filteredCal.val(filtered);
+
+                var verifyUrl = getFilteredCalendar(true)
+                $.get(verifyUrl).then(function (res) {
+                    var eventCount = (res.match(/BEGIN:VEVENT/g) || []).length;
+                    console.log('Event count', eventCount)
+                    window.calendar = res
+                }).catch(function (error) {
+                    console.log('error', error)
+                })
             }
         }
 
@@ -148,10 +157,11 @@ require_once('app.php');
             return $("#fb-calendar").val().trim();
         }
 
-        function getFilteredCalendar() {
+        function getFilteredCalendar(verifyUrl) {
             var cal = getFbCalendar();
             if (cal) {
-                var base = 'webcal://' + window.location.host + window.location.pathname + '?base64=true&calendar=';
+                const protocol = verifyUrl ? window.location.protocol : 'webcal:'
+                var base = protocol + '//' + window.location.host + window.location.pathname + '?base64=true&calendar=';
                 var url = base + window.btoa(cal);
 
                 var $checked = $('.options .switcher input:checked');
@@ -159,6 +169,7 @@ require_once('app.php');
                     return this.value;
                 }).toArray();
                 url += '&status=' + status.join(',');
+                url += verifyUrl ? '&verify=true' : ''
                 return url;
             } else {
                 return "";
