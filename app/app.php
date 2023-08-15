@@ -22,7 +22,8 @@ function removeEvents($content, $action)
 
 // Escape organizer field and remove quotes to fix for example
 // Google Calendar import
-function fixFields($content) {
+function fixFields($content)
+{
     $startNeedle = 'ORGANIZER;CN=';
     $endNeedle = ':MAILTO:';
 
@@ -41,7 +42,7 @@ function fixFields($content) {
     }
 
     $pattern = '/X-WR-CALNAME:.*/';
-    $content = preg_replace($pattern, "X-WR-CALNAME:Facebook Events", $content,1);
+    $content = preg_replace($pattern, "X-WR-CALNAME:Facebook Events", $content, 1);
 
     return $content;
 }
@@ -50,11 +51,12 @@ function fixFields($content) {
  * Get statuses
  * @return array The statuses that should be removed
  */
-function status() {
+function status()
+{
     $types = [STATUS_MAYBE, STATUS_GOING, STATUS_UNDECIDED];
     $status = array_get($_GET, "status", STATUS_GOING . ',' . STATUS_MAYBE);
     $status = $status ? explode(',', strtoupper($status)) : [];
-    foreach($status as $s) {
+    foreach ($status as $s) {
         if (!in_array($s, $types)) {
             http_response_code(400);
             die('Not supported status: ' . $s);
@@ -63,7 +65,8 @@ function status() {
     return array_diff($types, $status);
 }
 
-function validateUrl($url) {
+function validateUrl($url)
+{
     if (!preg_match('#^https?://www\.facebook\.com#', $url)) {
         http_response_code(400);
         die("Not a valid Facebook calendar url");
@@ -71,7 +74,8 @@ function validateUrl($url) {
 }
 
 // Sometimes chrome omits the ampersand in the query string (see issue #9)
-function addAmpersandIfMissing($url) {
+function addAmpersandIfMissing($url)
+{
     $pos = strpos($url, 'key=');
     if ($pos !== false && $url[$pos - 1] !== '&') {
         return substr_replace($url, '&key=', $pos, strlen('key='));
@@ -95,10 +99,13 @@ if ($calendar) {
     validateUrl($fbCal);
     $fbCal = addAmpersandIfMissing($fbCal);
 
-    // Facebook blocks requests without user agent
-    $content = @file_get_contents($fbCal, false, stream_context_create(['http' => [
-        'header'=>"User-Agent: eventcal.flown.io\r\n"
-    ]]));
+    // Facebook blocks requests without user agent or Sec-Fetch-Site
+    $content = @file_get_contents($fbCal, false, stream_context_create([
+        'http' => [
+            'header' => "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36\r\n" .
+                "Sec-Fetch-Site: none\r\n",
+        ]
+    ]));
 
     if ($content === false) {
         http_response_code(400);
@@ -110,7 +117,7 @@ if ($calendar) {
         die("Calendar not valid. Facebook error: " . $content);
     }
 
-    foreach(status() as $status) {
+    foreach (status() as $status) {
         $content = removeEvents($content, $status);
     }
     $content = fixFields($content);
