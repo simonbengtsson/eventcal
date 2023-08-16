@@ -1,7 +1,9 @@
 .idea
-/app/vendor/
 log.json
 notes.txt
 debug.json
 errors.log
 stats.json
+firebase-debug.log
+node_modules
+*.cache
