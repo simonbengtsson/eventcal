@@ -8,17 +8,9 @@ Filters and sanitizes your Facebook events into ical [http://eventcal.flown.io](
 
 Facebook provides a way to export and sync all your events to a third party calendar application such as Google Calendar, Apple Calendar or Outlook. However they include events not yet responded to. This service can declutter your calendar by filtering out those events.
 
-### Deploy
+### Develop & Deploy
 
-To deploy this service to your own server, simply upload everything in the `app` folder. With `rsync` this would be something like this:
-
-`rsync -a --chown=www-data:www-data app/ username@flown.io:/var/www/eventcal.flown.io`
-
-### Develop
-
-The easiest way to start development is by using php's built in web server.
-
-`php -S localhost:8080 -t app`
+Use firebase emulators to develop locally. Create a new firebase project to deploy to your own domain.
 
 ### Contributions
 
