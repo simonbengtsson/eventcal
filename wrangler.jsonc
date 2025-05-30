@@ -1,0 +1,9 @@
+{
+  "name": "eventcal",
+  "compatibility_date": "2025-05-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "src/index.ts",
+  "assets": {
+    "directory": "public"
+  }
+}

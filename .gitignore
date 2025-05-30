@@ -1,4 +1,4 @@
 .idea
+.vscode
+.wrangler
 node_modules
-*.cache
-firebase-debug.log
