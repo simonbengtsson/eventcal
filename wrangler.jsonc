@@ -6,6 +6,12 @@
   "observability": {
     "enabled": true
   },
+  "routes": [
+    {
+      "pattern": "https://eventcal.flown.io/*",
+      "zone_name": "flown.io"
+    }
+  ],
   "assets": {
     "directory": "public",
     "run_worker_first": true,
