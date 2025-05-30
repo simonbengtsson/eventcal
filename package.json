@@ -6,6 +6,9 @@
     "semi": false
   },
   "scripts": {
+    "clean": "rm -rf dist eventcal.lumo",
+    "dist": "npm run clean && mkdir dist && cp -r lumobase.jsonc public dist/",
+    "build:lumo": "npm run dist && cd dist && zip -r ../eventcal.lumo .",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },
