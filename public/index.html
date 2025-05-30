@@ -139,7 +139,7 @@
                 var cal = getFbCalendar();
                 if (cal) {
                     const protocol = verifyUrl ? window.location.protocol : 'webcal:'
-                    var base = protocol + '//' + window.location.host + window.location.pathname + '?base64=true&calendar=';
+                    var base = protocol + '//' + window.location.host + '/calendar?base64=true&calendar=';
                     var url = base + window.btoa(cal);
 
                     var $checked = $('.options .switcher input:checked');

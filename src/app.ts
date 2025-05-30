@@ -11,7 +11,7 @@ export async function generateCalendar(
     throw new Error("Calendar parameter is missing")
   }
 
-  let fbCal
+  let fbCal: string
   if (isBase64) {
     fbCal = Buffer.from(calendar, "base64").toString()
   } else {
@@ -22,10 +22,11 @@ export async function generateCalendar(
     fbCal = fbCal.replace("webcal", "https")
   }
 
-  validateUrl(fbCal)
+  validateFacebookDomain(fbCal)
   fbCal = addAmpersandIfMissing(fbCal)
 
-  // Fetching the Facebook calendar
+  // A browser like user agent and the sec-fetch-site header was added to avoid
+  // being blocked by Facebook.
   const response = await fetch(fbCal, {
     headers: {
       "User-Agent":
@@ -52,7 +53,7 @@ export async function generateCalendar(
 }
 
 // Remove events from content with the status action and returns the result
-function removeEvents(content, action) {
+function removeEvents(content: string, action: string) {
   let last = 0
   while (content.indexOf("PARTSTAT:" + action, last + 1) !== -1) {
     let pos = content.indexOf("PARTSTAT:" + action, last + 1)
@@ -66,7 +67,7 @@ function removeEvents(content, action) {
 
 // Escape organizer field and remove quotes to fix for example
 // Google Calendar import
-function fixFields(content) {
+function fixFields(content: string) {
   const startNeedle = "ORGANIZER;CN="
   const endNeedle = ":MAILTO:"
   let offset = 0
@@ -89,7 +90,7 @@ function fixFields(content) {
 }
 
 // Get statuses
-function getStatuses(queryStatus) {
+function getStatuses(queryStatus: string) {
   const types = [STATUS_MAYBE, STATUS_GOING, STATUS_UNDECIDED]
   let status = queryStatus
     ? queryStatus.split(",")
@@ -102,8 +103,7 @@ function getStatuses(queryStatus) {
   return types.filter((type) => !status.includes(type))
 }
 
-// Validate Facebook URL
-function validateUrl(url) {
+function validateFacebookDomain(url: string) {
   const pattern = /^https?:\/\/www\.facebook\.com/
   if (!pattern.test(url)) {
     throw new Error("Not a valid Facebook calendar url")
@@ -111,7 +111,7 @@ function validateUrl(url) {
 }
 
 // Sometimes browsers omit the ampersand in the query string
-function addAmpersandIfMissing(url) {
+function addAmpersandIfMissing(url: string) {
   const pos = url.indexOf("key=")
   if (pos !== -1 && url[pos - 1] !== "&") {
     return url.slice(0, pos) + "&key=" + url.slice(pos + "key=".length)
