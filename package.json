@@ -17,7 +17,7 @@
   },
   "main": "index.js",
   "devDependencies": {
-    "vite": "^6.3.5",
+    "vite": "^6.4.1",
     "wrangler": "^4.18.0"
   },
   "dependencies": {
